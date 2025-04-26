@@ -46,7 +46,7 @@ def validate_options_in_prompts(dietery, type_meal, allergens, cuisine):
     # Validate allergens (if not "None", ensure they're valid)
     valid_none_variants = ['None', 'N', 'o', 'n', 'e']
     
-if not all(allergen in ALLERGENS or allergen in valid_none_variants for allergen in allergens):
+    if not all(allergen in ALLERGENS or allergen in valid_none_variants for allergen in allergens):
         invalid_allergens = [allergen for allergen in allergens if allergen not in ALLERGENS and allergen not in valid_none_variants]
         return {"error": f"Invalid allergens: {invalid_allergens}. Allowed allergens are: {ALLERGENS}"}
 
