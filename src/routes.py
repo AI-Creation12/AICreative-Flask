@@ -22,10 +22,10 @@ def setup_routes(app):
         prompt_type_meal = data.get("meal_type")
         prompt_allergens = data.get("allergens")
         prompt_cuisene_type = data.get("cuisine_type")
-        # print("DIETERY:", prompt_dietary_preference)
-        # print("TYPE MEAL:", prompt_type_meal)
-        # print("ALLERGENS:", prompt_allergens)
-        # print("CUISENE TYPE:", prompt_cuisene_type)
+        print("DIETERY:", prompt_dietary_preference)
+        print("TYPE MEAL:", prompt_type_meal)
+        print("ALLERGENS:", prompt_allergens)
+        print("CUISENE TYPE:", prompt_cuisene_type)
 
         if not prompt_dietary_preference:
             prompt_dietary_preference = " "
