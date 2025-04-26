@@ -12,6 +12,10 @@ import base64
 def setup_routes(app):
     @app.route("/upload", methods=["POST"])
     def upload_image():
+
+        if request.method == "OPTIONS":
+            return '', 200
+        
         data = request.get_json()
 
         prompt_dietary_preference = data.get("dietary")
