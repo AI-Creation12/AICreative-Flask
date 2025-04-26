@@ -44,13 +44,12 @@ def validate_options_in_prompts(dietery, type_meal, allergens, cuisine):
         return {"error": f"Invalid meal type: {type_meal}. Allowed values are: {MEAL_TYPE}"}
 
     # Validate allergens (if not "None", ensure they're valid)
-    escape_elements = ['None', 'N', 'o', 'n', 'e']
+    valid_none_variants = ['None', 'N', 'o', 'n', 'e']
     
-    if allergens not in escape_elements:
-        allergens_list = allergens.split(",")  # Handle case where allergens are separated by commas
-        invalid_allergens = [allergen for allergen in allergens_list if allergen not in ALLERGENS]
-        if invalid_allergens:
-            return {"error": f"Invalid allergens: {invalid_allergens}. Allowed allergens are: {ALLERGENS}"}
+if not all(allergen in ALLERGENS or allergen in valid_none_variants for allergen in allergens):
+        invalid_allergens = [allergen for allergen in allergens if allergen not in ALLERGENS and allergen not in valid_none_variants]
+        return {"error": f"Invalid allergens: {invalid_allergens}. Allowed allergens are: {ALLERGENS}"}
+
     # Validate cuisine type
     if cuisine not in CUISINE_TYPES and cuisine != "Global":
         return {"error": f"Invalid cuisine type: {cuisine}. Allowed values are: {CUISINE_TYPES}"}
