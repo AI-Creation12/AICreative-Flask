@@ -6,6 +6,6 @@ from .routes import setup_routes
 app = Flask(__name__)
 
 # Enable CORS option 
-CORS(app, resources={r"/*": {"origins": "https://aicreative-back.onrender.com"}})
+CORS(app, resources={r"/*": {"origins": "https://aicreative-70lp.onrender.com/"}})
 # Setup all routes from the routes module
 setup_routes(app)
