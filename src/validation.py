@@ -44,8 +44,9 @@ def validate_options_in_prompts(dietery, type_meal, allergens, cuisine):
         return {"error": f"Invalid meal type: {type_meal}. Allowed values are: {MEAL_TYPE}"}
 
     # Validate allergens (if not "None", ensure they're valid)
-    if allergens != "None":
-        invalid_allergens = [allergen for allergen in allergens if allergen not in ALLERGENS]
+    if allergens.strip().lower() != "none":
+        allergens_list = allergens.split(",")
+        invalid_allergens = [allergen for allergen in allergens_list if allergen.strip() not in ALLERGENS]
         if invalid_allergens:
             return {"error": f"Invalid allergens: {invalid_allergens}. Allowed allergens are: {ALLERGENS}"}
     # Validate cuisine type
