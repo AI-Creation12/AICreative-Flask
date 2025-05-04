@@ -30,37 +30,15 @@ def analize_image_with_prompt(prompt, image_base64):
     return response 
 
 def generate_image_based_on_prompt(prompt):
-    payload = {
-        "contents": [
-            {
-                "parts": [
-                    {"text": prompt}
-                ]
-            }
-        ],
-        "generationConfig": {
-            "responseModalities": ["Text", "Image"]
-        }
-    }
-    headers = {
-        "Content-Type": "application/json"
-    }
+    # Generate image from pollinations with given prompt
+    width=1024
+    height=1024
+    seed=42
+    model="flux"
+    get_url = f"https://pollinations.ai/p/{prompt}?width={width}&height={height}&seed={seed}&model={model}"
 
-    api_key_to_send_request=get_available_key()
-    genai.configure(api_key=api_key_to_send_request)
-    model = genai.GenerativeModel("gemini-2.0-flash")
-    # API URL
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key={api_key_to_send_request}"
-    response = requests.post(url, json=payload, headers=headers)
-    response_data = response.json()
-    image_base64 = response_data['candidates'][0]['content']['parts'][0]['inlineData']['data']  # Extract base64 image
-
-    ### DEBUG
-    # Decode and save image
-    image_data = base64.b64decode(image_base64)
-    image_path = "gemini_generated_image.png"
-    with open(image_path, "wb") as img_file:
-        img_file.write(image_data)
-    
+    response = requests.get(get_url)
+    response.raise_for_status()
+    image_base64=base64.b64encode(response.content).decode('utf-8')
 
     return image_base64
